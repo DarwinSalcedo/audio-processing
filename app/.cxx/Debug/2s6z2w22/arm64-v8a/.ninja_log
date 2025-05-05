@@ -1,0 +1,5 @@
+# ninja log v5
+0	1352	1746429824856853589	CMakeFiles/test.dir/native-lib.cpp.o	99a0f1dfcf5d3e06
+1356	1501	1746429825012952556	/Users/darwinsalcedo/AndroidStudioProjects/audio-processing/app/build/intermediates/cxx/Debug/2s6z2w22/obj/arm64-v8a/libtest.so	4102985fcbf4fd52
+4	2635	1746432454884770936	CMakeFiles/test.dir/native-lib.cpp.o	99a0f1dfcf5d3e06
+2636	3417	1746432455676935495	/Users/darwinsalcedo/AndroidStudioProjects/audio-processing/app/build/intermediates/cxx/Debug/2s6z2w22/obj/arm64-v8a/libtest.so	4102985fcbf4fd52

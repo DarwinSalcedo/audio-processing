@@ -1,0 +1,38 @@
+{
+  "buildFiles": [
+    "/Users/darwinsalcedo/AndroidStudioProjects/audio-processing/app/src/main/cpp/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/darwinsalcedo/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/Users/darwinsalcedo/AndroidStudioProjects/audio-processing/app/.cxx/Debug/2s6z2w22/x86",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/darwinsalcedo/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/Users/darwinsalcedo/AndroidStudioProjects/audio-processing/app/.cxx/Debug/2s6z2w22/x86",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "test::@6890427a1f51a3e7e1df": {
+      "toolchain": "toolchain",
+      "abi": "x86",
+      "artifactName": "test",
+      "output": "/Users/darwinsalcedo/AndroidStudioProjects/audio-processing/app/build/intermediates/cxx/Debug/2s6z2w22/obj/x86/libtest.so",
+      "runtimeFiles": []
+    }
+  },
+  "toolchains": {
+    "toolchain": {
+      "cCompilerExecutable": "/Users/darwinsalcedo/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang.lld",
+      "cppCompilerExecutable": "/Users/darwinsalcedo/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++.lld"
+    }
+  },
+  "cFileExtensions": [],
+  "cppFileExtensions": [
+    "cpp"
+  ]
+}
