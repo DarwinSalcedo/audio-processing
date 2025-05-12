@@ -1,3 +1,3 @@
 # ninja log v5
-0	940	1746315166047396701	CMakeFiles/test.dir/native-lib.cpp.o	c633f8b508995e62
-945	1060	1746315166169444796	/Users/darwinsalcedo/AndroidStudioProjects/audio/app/build/intermediates/cxx/Debug/2s6z2w22/obj/armeabi-v7a/libtest.so	cae599a7b218c6d7
+0	816	1746938830181957761	CMakeFiles/test.dir/native-lib.cpp.o	3b9ce5989447e8ac
+819	922	1746938830290211061	/Users/darwinsalcedo/AndroidStudioProjects/audio-processing/app/build/intermediates/cxx/Debug/2s6z2w22/obj/armeabi-v7a/libtest.so	6be4b2257e687a32
