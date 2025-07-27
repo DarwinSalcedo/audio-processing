@@ -58,6 +58,7 @@ fun SetupScreen(navController: NavController, viewModel: SetupViewModel) {
         ) {
             var inputText by remember { mutableStateOf("") }
 
+            viewModel.addText(inputText)
 
             TextField(
                 value = inputText,

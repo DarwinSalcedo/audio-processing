@@ -22,7 +22,8 @@ fun AppNavigation() {
             Screen.Process.route
         )
         {
-            ProcessScreen("")
+
+            ProcessScreen(viewModel.rawText)
         }
     }
 }

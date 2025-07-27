@@ -6,6 +6,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SetupViewModel @Inject constructor() : ViewModel() {
+    var rawText: String = ""
+
+    fun addText(inputText: String) {
+        rawText = inputText
+    }
+
 
 
 
