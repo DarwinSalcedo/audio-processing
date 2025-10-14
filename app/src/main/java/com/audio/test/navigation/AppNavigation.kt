@@ -17,12 +17,8 @@ fun AppNavigation() {
         composable(Screen.Setup.route) {
             SetupScreen(navController, viewModel)
         }
-
-        composable(
-            Screen.Process.route
-        )
+        composable(Screen.Process.route)
         {
-
             ProcessScreen(viewModel.rawText)
         }
     }
