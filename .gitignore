@@ -604,3 +604,9 @@ app/.cxx/tools/debug/armeabi-v7a/compile_commands.json
 app/.cxx/tools/debug/x86_64/compile_commands.json
 
 app/.cxx/tools/release/x86/compile_commands.json
+
+.gradle/
+
+.idea/
+
+app/.cxx/Debug/2s6z2w22/arm64-v8a/

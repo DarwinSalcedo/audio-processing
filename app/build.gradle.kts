@@ -90,5 +90,5 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     implementation ("androidx.work:work-runtime-ktx:2.10.1")
-
+    implementation(libs.gson)
 }

@@ -2,6 +2,7 @@ package com.audio.test.data.local
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.audio.test.domain.model.LineResult
 
 @Entity(tableName = "sessions")
 data class SessionEntity(
@@ -10,5 +11,6 @@ data class SessionEntity(
     val originalText: String,
     val spokenText: String,
     val score: Int, // Percentage 0-100
-    val audioPath: String? // Path to saved audio file, if any
+    val audioPath: String?, // Path to saved audio file, if any
+    val lines: List<LineResult> = emptyList()
 )

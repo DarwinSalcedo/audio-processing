@@ -21,7 +21,8 @@ class SessionRepositoryImpl @Inject constructor(
                     originalText = entity.originalText,
                     spokenText = entity.spokenText,
                     score = entity.score,
-                    audioPath = entity.audioPath
+                    audioPath = entity.audioPath,
+                    lines = entity.lines
                 )
             }
         }
@@ -33,7 +34,8 @@ class SessionRepositoryImpl @Inject constructor(
             originalText = session.originalText,
             spokenText = session.spokenText,
             score = session.score,
-            audioPath = session.audioPath
+            audioPath = session.audioPath,
+            lines = session.lines
         )
         return sessionDao.insertSession(entity)
     }
@@ -46,7 +48,8 @@ class SessionRepositoryImpl @Inject constructor(
                 originalText = entity.originalText,
                 spokenText = entity.spokenText,
                 score = entity.score,
-                audioPath = entity.audioPath
+                audioPath = entity.audioPath,
+                lines = entity.lines
             )
         }
     }

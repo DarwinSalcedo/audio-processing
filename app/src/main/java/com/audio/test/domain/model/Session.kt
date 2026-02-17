@@ -6,5 +6,6 @@ data class Session(
     val originalText: String,
     val spokenText: String,
     val score: Int,
-    val audioPath: String?
+    val audioPath: String?,
+    val lines: List<LineResult> = emptyList()
 )

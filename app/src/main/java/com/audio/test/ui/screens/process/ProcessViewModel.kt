@@ -5,8 +5,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.audio.test.data.repository.WordProcess
 import com.audio.test.domain.model.Line
+import com.audio.test.domain.model.LineResult
 import com.audio.test.domain.model.Session
 import com.audio.test.domain.model.Word
+import com.audio.test.domain.model.WordResult
 import com.audio.test.domain.repository.SpeechRecognitionRepository
 import com.audio.test.domain.usecase.SaveSessionUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -180,14 +182,30 @@ class ProcessViewModel @Inject constructor(
 
     private fun saveSession() {
         viewModelScope.launch {
-            val totalAccuracy = _lines.value.map { it.accuracy }.average().toInt()
+            val currentLines = _lines.value
+            val totalAccuracy = currentLines.map { it.accuracy }.average().toInt()
+
+            val lineResults = currentLines.map { line ->
+                LineResult(
+                    originalText = line.text,
+                    spokenText = "", // Not tracking granular spoken text per line yet
+                    accuracy = line.accuracy,
+                    words = line.words.map { word ->
+                        WordResult(
+                            originalWord = word.text,
+                            isMatched = word.isMatched
+                        )
+                    }
+                )
+            }
 
             val session = Session(
                 timestamp = System.currentTimeMillis(),
                 originalText = originalText,
                 spokenText = _spokenTextBuilder.toString().ifEmpty { "Incomplete session" },
                 score = totalAccuracy,
-                audioPath = null
+                audioPath = null,
+                lines = lineResults
             )
             val id = saveSessionUseCase(session)
             _navigateToResult.send(id)
