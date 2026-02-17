@@ -7,9 +7,10 @@ import com.learn.easy.data.repository.WordProcess
 import com.learn.easy.domain.model.Line
 import com.learn.easy.domain.model.LineResult
 import com.learn.easy.domain.model.Session
-import com.learn.easy.domain.model.Word
 import com.learn.easy.domain.model.WordResult
 import com.learn.easy.domain.repository.SpeechRecognitionRepository
+import com.learn.easy.domain.usecase.ParseTextToLinesUseCase
+import com.learn.easy.domain.usecase.ProcessSpeechUseCase
 import com.learn.easy.domain.usecase.SaveSessionUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -24,6 +25,8 @@ import javax.inject.Inject
 class ProcessViewModel @Inject constructor(
     private val speechRepository: SpeechRecognitionRepository,
     private val saveSessionUseCase: SaveSessionUseCase,
+    private val processSpeechUseCase: ProcessSpeechUseCase,
+    private val parseTextToLinesUseCase: ParseTextToLinesUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -52,16 +55,7 @@ class ProcessViewModel @Inject constructor(
     }
 
     private fun initializeLines() {
-        // Split by newlines or punctuation to get sentences/lines
-        val rawLines = originalText.trim().split(Regex("(?<=[.!?])\\s+"))
-
-        val lineList = rawLines.mapIndexed { index, text ->
-            val words = text.trim().split("\\s+".toRegex()).map {
-                Word(it, false)
-            }
-            Line(index, text.trim(), words)
-        }
-        _lines.value = lineList
+        _lines.value = parseTextToLinesUseCase(originalText)
     }
 
     fun toggleRecording() {
@@ -84,76 +78,20 @@ class ProcessViewModel @Inject constructor(
     private fun processSpeech(spoken: WordProcess) {
         val currentIndex = _currentLineIndex.value
         val currentLines = _lines.value
-        if (currentIndex >= currentLines.size) return
-        if (spoken.words.trim().isEmpty()) return
+        
+        val result = processSpeechUseCase(spoken, currentLines, currentIndex) ?: return
 
-        _hasStarted.value = true
+        _hasStarted.value = result.hasStarted
+        _lines.value = result.updatedLines
 
-        val currentLine = currentLines[currentIndex]
-        val spokenWords = spoken.words.lowercase().split("\\s+".toRegex())
+        result.additionalSpokenText?.let { text ->
+            _spokenTextBuilder.append(text).append(" ")
+        }
 
-        if (spoken is WordProcess.Partial) {
-            // PARTIAL: Only update visual matching, do not advance line yet
-            val updatedWords = currentLine.words.map { originalWord ->
-                if (originalWord.isMatched) {
-                    originalWord
-                } else {
-                    val cleanOriginal = originalWord.text.lowercase().replace(Regex("[^a-z0-9]"), "")
-                    if (cleanOriginal.isEmpty()) {
-                        originalWord
-                    } else {
-                        // Strict match only: Word must exactly equal the spoken word
-                        val isMatch = spokenWords.any { spokenWord ->
-                             spokenWord == cleanOriginal
-                        }
-                        originalWord.copy(isMatched = isMatch)
-                    }
-                }
-            }
-
-            val updatedLine = currentLine.copy(words = updatedWords)
-            val newLines = currentLines.toMutableList()
-            newLines[currentIndex] = updatedLine
-            _lines.value = newLines
-        } else if (spoken is WordProcess.Final) {
-            // FINAL: Re-evaluate with final text, commit score, and ADVANCE
-            val updatedWords = currentLine.words.map { originalWord ->
-                if (originalWord.isMatched) {
-                    originalWord
-                } else {
-                    val cleanOriginal = originalWord.text.lowercase().replace(Regex("[^a-z0-9]"), "")
-                    if (cleanOriginal.isEmpty()) {
-                        originalWord
-                    } else {
-                        val isMatch = spokenWords.any { spokenWord ->
-                            spokenWord == cleanOriginal
-                        }
-                        originalWord.copy(isMatched = isMatch)
-                    }
-                }
-            }
-
-            val matchedCount = updatedWords.count { it.isMatched }
-            val totalWords = updatedWords.size
-            val accuracy = if (totalWords > 0) (matchedCount * 100) / totalWords else 0
-
-            val updatedLine = currentLine.copy(
-                words = updatedWords,
-                accuracy = accuracy,
-                isCompleted = true
-            )
-
-            val newLines = currentLines.toMutableList()
-            newLines[currentIndex] = updatedLine
-            _lines.value = newLines
-
-            _spokenTextBuilder.append(spoken.words).append(" ")
-
-            if (currentIndex < currentLines.size - 1) {
-                _currentLineIndex.value = currentIndex + 1
-            } else {
-                stopRecording()
-            }
+        if (result.shouldAdvanceLine) {
+            _currentLineIndex.value = currentIndex + 1
+        } else if (result.completedLineIndex == currentLines.lastIndex) {
+            stopRecording()
         }
     }
 

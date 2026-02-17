@@ -16,6 +16,7 @@ voskAndroid = "0.3.75"
 room = "2.6.1"
 ksp = "2.0.0-1.0.21"
 coroutines = "1.7.3"
+mockk = "1.13.10"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -45,6 +46,8 @@ room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 gson = { module = "com.google.code.gson:gson", version = "2.10.1" }
 androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version = "1.0.0" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 
 
 [plugins]
