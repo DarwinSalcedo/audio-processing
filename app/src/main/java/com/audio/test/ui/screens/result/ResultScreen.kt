@@ -37,6 +37,8 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.ui.res.stringResource
+import com.audio.test.R
 import com.audio.test.ui.components.AppButton
 import com.audio.test.ui.components.ScoreIndicator
 
@@ -63,7 +65,7 @@ fun ResultScreen(
                 Spacer(modifier = Modifier.height(32.dp))
                 
                 Text(
-                    text = "Session Result",
+                    text = stringResource(R.string.result_title),
                     style = MaterialTheme.typography.headlineMedium,
                     color = MaterialTheme.colorScheme.primary
                 )
@@ -77,7 +79,7 @@ fun ResultScreen(
                 
                 // Line-by-Line Results
                 Text(
-                    text = "Detailed Breakdown",
+                    text = stringResource(R.string.result_breakdown_title),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.align(Alignment.Start)
@@ -100,7 +102,7 @@ fun ResultScreen(
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Text(
-                                    text = "Line ${index + 1}",
+                                    text = "${stringResource(R.string.result_line_prefix)} ${index + 1}",
                                     style = MaterialTheme.typography.labelMedium,
                                     color = MaterialTheme.colorScheme.secondary
                                 )
@@ -134,7 +136,7 @@ fun ResultScreen(
                 
                 Row(modifier = Modifier.fillMaxWidth()) {
                     AppButton(
-                        text = "Home",
+                        text = stringResource(R.string.result_home_button),
                         onClick = onNavigateHome,
                         modifier = Modifier.fillMaxWidth()
                     )
@@ -180,7 +182,7 @@ fun BigScoreCircle(score: Int) {
                 color = color
             )
             Text(
-                text = "Match",
+                text = stringResource(R.string.result_match_label),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )

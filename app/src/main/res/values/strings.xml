@@ -1,3 +1,33 @@
 <resources>
     <string name="app_name">TestCompose</string>
+    
+    <!-- Setup Screen -->
+    <string name="setup_title">Let\'s Shadowing!</string>
+    <string name="setup_input_label">Paste text to practice here...</string>
+    <string name="setup_sample_text">Sample text for practice.</string>
+    <string name="setup_start_button">Start Practice</string>
+    <string name="setup_history_button">View History</string>
+
+    <!-- Process Screen -->
+    <string name="process_try_again_desc">Try Again</string>
+    <string name="process_try_again_button">Try Again</string>
+    <string name="process_finish_desc">Finish</string>
+    <string name="process_finish_button">Finish</string>
+    <string name="process_stop_desc">Stop</string>
+    <string name="process_start_desc">Start</string>
+    <string name="process_status_start">Click on play to start</string>
+    <string name="process_status_retry">You can try again</string>
+    <string name="process_status_read_aloud">Read Aloud</string>
+    <string name="process_status_complete">Complete</string>
+
+    <!-- History Screen -->
+    <string name="history_back_desc">Back</string>
+    <string name="history_title">History</string>
+
+    <!-- Result Screen -->
+    <string name="result_title">Session Result</string>
+    <string name="result_breakdown_title">Detailed Breakdown</string>
+    <string name="result_line_prefix">Line</string>
+    <string name="result_home_button">Home</string>
+    <string name="result_match_label">Match</string>
 </resources>

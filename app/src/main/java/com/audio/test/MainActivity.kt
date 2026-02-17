@@ -19,6 +19,7 @@ import com.audio.test.navigation.Screen
 import com.audio.test.ui.screens.process.ProcessScreen
 import com.audio.test.ui.screens.result.ResultScreen
 import com.audio.test.ui.screens.setup.SetupScreen
+import com.audio.test.ui.screens.history.HistoryScreen
 import com.audio.test.ui.theme.AudioAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -57,6 +58,9 @@ class MainActivity : ComponentActivity() {
                                 onStartPractice = { text ->
                                     val safeText = android.net.Uri.encode(text)
                                     navController.navigate("process/$safeText")
+                                },
+                                onNavigateToHistory = {
+                                    navController.navigate(Screen.History.route)
                                 }
                             )
                         }
@@ -92,6 +96,15 @@ class MainActivity : ComponentActivity() {
                                     navController.navigate(Screen.Setup.route) {
                                         popUpTo(Screen.Setup.route) { inclusive = true }
                                     }
+                                }
+                            )
+                        }
+
+                        composable(route = Screen.History.route) {
+                            HistoryScreen(
+                                onNavigateBack = { navController.popBackStack() },
+                                onSessionClick = { sessionId ->
+                                    navController.navigate(Screen.Result.createRoute(sessionId))
                                 }
                             )
                         }

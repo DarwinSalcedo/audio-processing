@@ -14,4 +14,5 @@ sealed class Screen(val route: String) {
             return "result/$sessionId"
         }
     }
+    object History : Screen("history")
 }
