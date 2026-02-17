@@ -4,6 +4,7 @@ plugins {
     kotlin("kapt")
     alias(libs.plugins.kotlin.compose)
     id("com.google.dagger.hilt.android")
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -40,12 +41,6 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
-    externalNativeBuild {
-        cmake {
-            path = file("src/main/cpp/CMakeLists.txt")
-            version = "3.22.1"
-        }
-    }
 
     buildFeatures {
         compose = true
@@ -70,6 +65,11 @@ dependencies {
     implementation("androidx.hilt:hilt-navigation:1.2.0")
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
     kapt("androidx.hilt:hilt-compiler:1.2.0")
+
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
+    implementation(libs.kotlinx.coroutines.android)
 
     implementation(libs.androidx.navigation.compose)
     implementation(libs.vosk.android)

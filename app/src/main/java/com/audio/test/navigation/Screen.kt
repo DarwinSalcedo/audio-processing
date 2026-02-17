@@ -1,6 +1,17 @@
 package com.audio.test.navigation
 
 sealed class Screen(val route: String) {
-    object Setup: Screen("setup_screen")
-    object Process: Screen("process_screen")
+    object Setup : Screen("setup")
+    object Process : Screen("process/{text}") {
+        fun createRoute(text: String): String {
+            // Encode the text to handle special characters if necessary.
+            // For now, assuming standard text. Using Base64 could be better for long text.
+            return "process/$text"
+        }
+    }
+    object Result : Screen("result/{sessionId}") {
+        fun createRoute(sessionId: Long): String {
+            return "result/$sessionId"
+        }
+    }
 }
