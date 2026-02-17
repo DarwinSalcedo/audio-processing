@@ -8,11 +8,11 @@ plugins {
 }
 
 android {
-    namespace = "com.audio.test"
+    namespace = "com.learn.easy"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.audio.test"
+        applicationId = "com.learn.easy"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
