@@ -55,9 +55,9 @@ fun SessionCard(
         ) {
             // Score Circle (Mini)
             ScoreIndicator(score = session.score)
-            
+
             Spacer(modifier = Modifier.width(16.dp))
-            
+
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = session.originalText,
@@ -93,7 +93,7 @@ fun ScoreIndicator(score: Int) {
         score >= 50 -> Color(0xFFFFC107) // Amber
         else -> Color(0xFFFF5252) // Red
     }
-    
+
     Column(
         modifier = Modifier
             .width(50.dp)

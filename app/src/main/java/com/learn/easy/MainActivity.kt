@@ -3,10 +3,16 @@ package com.learn.easy
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -14,6 +20,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.learn.easy.navigation.Screen
 import com.learn.easy.ui.screens.history.HistoryScreen
+import com.learn.easy.ui.screens.onboarding.OnboardingScreen
 import com.learn.easy.ui.screens.permission.PermissionScreen
 import com.learn.easy.ui.screens.process.ProcessScreen
 import com.learn.easy.ui.screens.result.ResultScreen
@@ -34,72 +41,98 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val navController = rememberNavController()
+                    val mainViewModel: MainViewModel =
+                        hiltViewModel()
+                    val startDestination by mainViewModel.startDestination.collectAsState(initial = null)
 
-                    NavHost(
-                        navController = navController,
-                        startDestination = Screen.Setup.route
-                    ) {
-                        composable(route = Screen.Permission.route) {
-                            PermissionScreen(
-                                onPermissionGranted = {
-                                    navController.popBackStack()
-                                }
-                            )
-                        }
-
-                        composable(route = Screen.Setup.route) {
-                            SetupScreen(
-                                onStartPractice = { text ->
-                                    val safeText = android.net.Uri.encode(text)
-                                    navController.navigate("process/$safeText")
-                                },
-                                onNavigateToHistory = {
-                                    navController.navigate(Screen.History.route)
-                                },
-                                onNavigateToPermission = {
-                                    navController.navigate(Screen.Permission.route)
-                                }
-                            )
-                        }
-
-                        composable(
-                            route = Screen.Process.route,
-                            arguments = listOf(navArgument("text") { type = NavType.StringType })
+                    if (startDestination == null) {
+                        // Loading Screen
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
                         ) {
-                            // Arguments are handled by ViewModel via SavedStateHandle, so we don't need to extract them here manually
-                            // unless we wanted to pass them to screen composable directly.
-                            // But ProcessViewModel gets it from SavedStateHandle.
-                            // However, ProcessScreen needs the callback for navigation.
-
-                            ProcessScreen(
-                                onFinish = { sessionId ->
-                                    navController.navigate("result/$sessionId") {
-                                        popUpTo(Screen.Setup.route) { inclusive = false }
-                                    }
-                                }
-                            )
+                            CircularProgressIndicator()
                         }
-
-                        composable(
-                            route = Screen.Result.route,
-                            arguments = listOf(navArgument("sessionId") { type = NavType.LongType })
+                    } else {
+                        NavHost(
+                            navController = navController,
+                            startDestination = startDestination!!
                         ) {
-                            ResultScreen(
-                                onNavigateHome = {
-                                    navController.navigate(Screen.Setup.route) {
-                                        popUpTo(Screen.Setup.route) { inclusive = true }
+                            composable(route = Screen.Onboarding.route) {
+                                OnboardingScreen(
+                                    onFinish = {
+                                        navController.navigate(Screen.Setup.route) {
+                                            popUpTo(Screen.Onboarding.route) { inclusive = true }
+                                        }
                                     }
-                                }
-                            )
-                        }
+                                )
+                            }
+                            composable(route = Screen.Permission.route) {
+                                PermissionScreen(
+                                    onPermissionGranted = {
+                                        navController.popBackStack()
+                                    }
+                                )
+                            }
 
-                        composable(route = Screen.History.route) {
-                            HistoryScreen(
-                                onNavigateBack = { navController.popBackStack() },
-                                onSessionClick = { sessionId ->
-                                    navController.navigate(Screen.Result.createRoute(sessionId))
-                                }
-                            )
+                            composable(route = Screen.Setup.route) {
+                                SetupScreen(
+                                    onStartPractice = { text ->
+                                        val safeText = android.net.Uri.encode(text)
+                                        navController.navigate("process/$safeText")
+                                    },
+                                    onNavigateToHistory = {
+                                        navController.navigate(Screen.History.route)
+                                    },
+                                    onNavigateToPermission = {
+                                        navController.navigate(Screen.Permission.route)
+                                    }
+                                )
+                            }
+
+                            composable(
+                                route = Screen.Process.route,
+                                arguments = listOf(navArgument("text") {
+                                    type = NavType.StringType
+                                })
+                            ) {
+                                // Arguments are handled by ViewModel via SavedStateHandle, so we don't need to extract them here manually
+                                // unless we wanted to pass them to screen composable directly.
+                                // But ProcessViewModel gets it from SavedStateHandle.
+                                // However, ProcessScreen needs the callback for navigation.
+
+                                ProcessScreen(
+                                    onFinish = { sessionId ->
+                                        navController.navigate("result/$sessionId") {
+                                            popUpTo(Screen.Setup.route) { inclusive = false }
+                                        }
+                                    }
+                                )
+                            }
+
+                            composable(
+                                route = Screen.Result.route,
+                                arguments = listOf(navArgument("sessionId") {
+                                    type = NavType.LongType
+                                })
+                            ) {
+                                ResultScreen(
+                                    onNavigateHome = {
+                                        navController.navigate(Screen.Setup.route) {
+                                            popUpTo(Screen.Setup.route) { inclusive = true }
+                                        }
+                                    }
+                                )
+                            }
+
+                            composable(route = Screen.History.route) {
+                                HistoryScreen(
+                                    onNavigateBack = { navController.popBackStack() },
+                                    onSessionClick = { sessionId ->
+                                        navController.navigate(Screen.Result.createRoute(sessionId))
+                                    }
+                                )
+                            }
                         }
                     }
                 }
@@ -107,3 +140,4 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+

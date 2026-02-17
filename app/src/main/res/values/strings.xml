@@ -30,4 +30,15 @@
     <string name="result_line_prefix">Line</string>
     <string name="result_home_button">Home</string>
     <string name="result_match_label">Match</string>
+
+    <!-- Onboarding Screen -->
+    <string name="onboarding_skip">Skip</string>
+    <string name="onboarding_next">Next</string>
+    <string name="onboarding_get_started">Get Started</string>
+    <string name="onboarding_page1_title">Welcome</string>
+    <string name="onboarding_page1_desc">Transform your English shadowing practice.</string>
+    <string name="onboarding_page2_title">Record &amp; Analyze</string>
+    <string name="onboarding_page2_desc">Read aloud and get instant feedback on your pronunciation.</string>
+    <string name="onboarding_page3_title">Track Progress</string>
+    <string name="onboarding_page3_desc">See your history and improvement over time.</string>
 </resources>

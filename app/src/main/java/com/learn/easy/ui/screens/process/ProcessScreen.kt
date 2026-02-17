@@ -66,10 +66,8 @@ fun ProcessScreen(
         }
     }
 
-    // Auto-scroll to current line
     LaunchedEffect(currentLineIndex) {
         if (lines.isNotEmpty()) {
-            println("current scroll $currentLineIndex")
             listState.animateScrollToItem(currentLineIndex)
         }
     }

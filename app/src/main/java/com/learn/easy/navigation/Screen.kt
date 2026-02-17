@@ -2,6 +2,7 @@ package com.learn.easy.navigation
 
 sealed class Screen(val route: String) {
     object Permission : Screen("permission")
+    object Onboarding : Screen("onboarding")
     object Setup : Screen("setup")
     object Process : Screen("process/{text}") {
         fun createRoute(text: String): String {
