@@ -35,6 +35,25 @@
     <string name="onboarding_skip">Skip</string>
     <string name="onboarding_next">Next</string>
     <string name="onboarding_get_started">Get Started</string>
+
+    <!-- Home Screen -->
+    <string name="home_title">Choose Mode</string>
+    <string name="mode_shadowing">Shadowing</string>
+    <string name="mode_shadowing_desc">Practice with your own text</string>
+    <string name="mode_just_talk">Just Talk</string>
+    <string name="mode_just_talk_desc">Freestyle speech recognition</string>
+    <string name="mode_random_phrases">Random Phrases</string>
+    <string name="mode_random_phrases_desc">Speed challenge with random phrases</string>
+    <string name="just_talk_title">Just Talk</string>
+    <string name="clear_text">Clear Text</string>
+    <string name="random_phrases_title">Random Phrases</string>
+    <string name="score_label">Score: %d</string>
+    <string name="time_label">Time: %s</string>
+    <string name="start_game">Start Game</string>
+    <string name="stop_game">Stop Game</string>
+    <string name="play_again">Play Again</string>
+    <string name="game_over">Game Over!</string>
+    <string name="final_score">Final Score: %d</string>
     <string name="onboarding_page1_title">Welcome</string>
     <string name="onboarding_page1_desc">Transform your English shadowing practice.</string>
     <string name="onboarding_page2_title">Record &amp; Analyze</string>

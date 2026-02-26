@@ -18,7 +18,7 @@ class MainViewModel @Inject constructor(
 
     val startDestination: StateFlow<String?> = userPreferencesRepository.isOnboardingCompleted
         .map { completed ->
-            if (completed) Screen.Setup.route else Screen.Onboarding.route
+            if (completed) Screen.Home.route else Screen.Onboarding.route
         }
         .stateIn(
             scope = viewModelScope,

@@ -20,7 +20,10 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.learn.easy.navigation.Screen
 import com.learn.easy.ui.screens.history.HistoryScreen
+import com.learn.easy.ui.screens.home.HomeScreen
+import com.learn.easy.ui.screens.justtalk.JustTalkScreen
 import com.learn.easy.ui.screens.onboarding.OnboardingScreen
+import com.learn.easy.ui.screens.random.RandomPhrasesScreen
 import com.learn.easy.ui.screens.permission.PermissionScreen
 import com.learn.easy.ui.screens.process.ProcessScreen
 import com.learn.easy.ui.screens.result.ResultScreen
@@ -61,10 +64,30 @@ class MainActivity : ComponentActivity() {
                             composable(route = Screen.Onboarding.route) {
                                 OnboardingScreen(
                                     onFinish = {
-                                        navController.navigate(Screen.Setup.route) {
+                                        navController.navigate(Screen.Home.route) {
                                             popUpTo(Screen.Onboarding.route) { inclusive = true }
                                         }
                                     }
+                                )
+                            }
+                            
+                            composable(route = Screen.Home.route) {
+                                HomeScreen(
+                                    onNavigateToShadowing = { navController.navigate(Screen.Setup.route) },
+                                    onNavigateToJustTalk = { navController.navigate(Screen.JustTalk.route) },
+                                    onNavigateToRandomPhrases = { navController.navigate(Screen.RandomPhrases.route) }
+                                )
+                            }
+
+                            composable(route = Screen.JustTalk.route) {
+                                JustTalkScreen(
+                                    onNavigateBack = { navController.popBackStack() }
+                                )
+                            }
+
+                            composable(route = Screen.RandomPhrases.route) {
+                                RandomPhrasesScreen(
+                                    onNavigateBack = { navController.popBackStack() }
                                 )
                             }
                             composable(route = Screen.Permission.route) {
